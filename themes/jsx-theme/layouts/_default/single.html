@@ -1,0 +1,14 @@
+{{ define "main" }}
+	<h1>Default Single Page Layout</h1>
+	<h2>{{ .Page.Title }}</h2>
+	<h5>{{ .Page.RelPermalink }}</h5>
+
+	{{ $slug := .Page.RelPermalink | replaceRE "/" ""}}
+	<div id={{ $slug }} class="page"></div>
+
+	<div>{{ $slug }}</div>
+{{ end }}
+
+{{ define "jsxScript" }}
+	{{ partial "global/jsx-script.html" . }}
+{{ end }}

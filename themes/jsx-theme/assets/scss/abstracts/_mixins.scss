@@ -1,0 +1,636 @@
+// -----------------------------------------------------------------------------
+// This file contains all application-wide Sass mixins.
+// -----------------------------------------------------------------------------
+
+// Event wrapper
+// @author Harry Roberts
+// @param {Bool} $self [false] - Whether or not to include current selector
+// @link https://twitter.com/csswizardry/status/478938530342006784 Original tweet from Harry Roberts
+
+@mixin on-event($self: false) {
+	/* stylelint-disable */
+	@if $self {
+		&,
+		&:hover,
+		&:active,
+		&:focus {
+			@content;
+		}
+	} @else {
+		&:hover,
+		&:active,
+		&:focus {
+			@content;
+		}
+	}
+	/* stylelint-enable */
+}
+
+// Make a context based selector a little more friendly
+// @author Hugo Giraudel
+// @param {String} $context
+
+@mixin when-inside($context) {
+	#{$context} & {
+		@content;
+	}
+}
+
+// add hover effect to devices that
+// can be hovered (not touch devcies)
+
+@mixin on-hover() {
+	@media (hover: hover) {
+		&:hover {
+			@content;
+		}
+	}
+}
+
+// Remove scrollbars
+
+@mixin remove-scrollbars() {
+	-ms-overflow-style: none;
+	scrollbar-width: none;
+
+	&::-webkit-scrollbar {
+		display: none;
+	}
+}
+
+// for use with image snippet, but can also be used by adding data-media
+// attribute to media asset and applying mixin to its container
+
+@mixin aspect-ratio-media($width, $height) {
+	position: relative;
+
+	&:before {
+		display: block;
+		content: '';
+		width: 100%;
+		padding-top: ($height / $width) * 100%;
+	}
+
+	[data-media] {
+		position: absolute;
+		top: 0;
+		left: 0;
+		height: 100%;
+		width: 100%;
+		object-fit: cover;
+		// TODO: remove this if we do not need browser support
+		// font-family: 'object-fit: cover;';
+	}
+}
+
+// truncates text after n lines
+
+@mixin truncate-text($lines: 3) {
+	display: -webkit-box;
+	-webkit-box-orient: vertical;
+	-webkit-line-clamp: $lines;
+	overflow: hidden;
+}
+
+/* ============================================================================
+ * Form
+*/
+
+@mixin placeholder($color, $opacity: .4) {
+	&::-webkit-input-placeholder { /* WebKit browsers */
+		color: $color;
+		opacity: $opacity;
+	}
+
+	&:-moz-placeholder { /* Mozilla Firefox 4 to 18 */
+		color: $color;
+		opacity: $opacity;
+	}
+
+	&::-moz-placeholder { /* Mozilla Firefox 19+ */
+		color: $color;
+		opacity: $opacity;
+	}
+
+	&:-ms-input-placeholder { /* Internet Explorer 10+ */
+		color: $color;
+		opacity: $opacity;
+	}
+}
+
+/* ============================================================================
+ * Font
+*/
+
+// Include required file types for custom webfont rendering.
+
+@mixin font-face ($family, $src, $weight: normal, $style: normal) {
+	@font-face {
+		font-family: $family;
+		src: url('#{$src}.otf') format('opentype');
+		font-style: $style;
+		font-weight: $weight;
+		font-display: swap;
+	}
+}
+
+/* ============================================================================
+ * Breakpoints
+*/
+
+// Mixin to query tablet width and up
+// @requires $tablet-up
+
+@mixin at-tablet {
+	@media only screen and ($tablet-up) {
+		@content;
+	}
+}
+
+@mixin tablet-down {
+	@media only screen and ($tablet-down) {
+		@content;
+	}
+}
+
+// Mixin to query tablet width and up
+// @requires $laptop-up
+
+@mixin at-laptop {
+	@media only screen and ($laptop-up) {
+		@content;
+	}
+}
+
+@mixin laptop-down {
+	@media only screen and ($laptop-down) {
+		@content;
+	}
+}
+
+// Mixin to query tablet width and up
+// @requires $desktop-up
+
+@mixin at-desktop {
+	@media only screen and ($desktop-up) {
+		@content;
+	}
+}
+
+@mixin desktop-down {
+	@media only screen and ($desktop-down) {
+		@content;
+	}
+}
+
+// Mixin to query tablet width and up
+// @requires $widescreen-up
+
+@mixin at-widescreen {
+	@media only screen and ($widescreen-up) {
+		@content;
+	}
+}
+
+@mixin widescreen-down {
+	@media only screen and ($widescreen-down) {
+		@content;
+	}
+}
+
+/* ============================================================================
+ * Typography
+*/
+
+/* ============================================================================
+ * base text style mixins
+ *
+ * these base mixins should not be used directly
+ * we create these to compose the ones to use above
+ * thats why we keep the base mixins at the bottom
+ * these base mixins are hardly ever modified
+*/
+
+/*
+ * mixin for setting font styles with base styles that should always be set
+ *
+ * 1. the creative team always wants these styles on text
+ *    makes the text render mo' buttery like
+*/
+@mixin base-text-style ($fontFamily, $fontSize, $letterSpacing, $lineHeight, $fontWeight, $color) {
+	color: $color;
+	font-family: $fontFamily;
+	font-size: $fontSize;
+	font-style: normal;
+	font-weight: $fontWeight;
+	letter-spacing: $letterSpacing;
+	line-height: $lineHeight;
+	// -moz-osx-font-smoothing: grayscale; /* 1 */
+	// -webkit-font-smoothing: antialiased; /* 1 */
+}
+
+/*
+ * base mixin for "Body Copy" text styles
+ *
+ * 1. all "Body Copy" text styles
+*/
+@mixin base-text-style-body-copy ($fontSize, $letterSpacing, $lineHeight, $fontWeight, $color) {
+	$fontFamily: $text-font-stack;
+
+	@include base-text-style (
+		$fontFamily,
+		$fontSize,
+		$letterSpacing,
+		$lineHeight,
+		$fontWeight,
+		$color,
+	);
+}
+
+/*
+ * Body Copy
+*/
+@mixin text-style-body-copy ($color: inherit) {
+	$font-size: 1.4rem;
+	$letter-spacing: 0;
+	$line-height: 2.2rem;
+	$font-weight: 300;
+
+	@include base-text-style-body-copy (
+		$font-size,
+		$letter-spacing,
+		$line-height,
+		$font-weight,
+		$color
+	);
+
+	@include at-laptop {
+		font-size: 1.6rem;
+		line-height: 2.6rem;
+	}
+}
+
+/*
+ * base mixin for "Heading" text styles
+ *
+ * 1. all Headings use the same font-family
+*/
+@mixin base-text-style-heading ($fontSize, $letterSpacing, $lineHeight, $fontWeight, $color) {
+	$fontFamily: $text-font-stack;
+
+	@include base-text-style (
+		$fontFamily,
+		$fontSize,
+		$letterSpacing,
+		$lineHeight,
+		$fontWeight,
+		$color,
+	);
+}
+
+/*
+ * base mixin for "Button" styles
+ *
+*/
+
+@mixin base-button-style () {
+	display: inline-block;
+	font-family: $text-font-stack;
+	font-size: 1.6rem;
+	line-height: 2.4rem;
+	font-weight: 500;
+	letter-spacing: .02rem;
+	height: 50px;
+	min-width: 168px;
+	border-radius: 25px;
+	padding: 13px 30px;
+	text-align: center;
+	color: $big-stone-blue;
+	background-color: $anakiwa-blue;
+	transition-property: all;
+	transition-duration: 250ms;
+	transition-timing-function: ease-in-out;
+
+	@include on-hover {
+		outline: none;
+		background-color: $lochmara-blue;
+		color: $white;
+
+		span {
+			transform: translateX(5px);
+		}
+	}
+
+	&[disabled],
+	&[disabled=disabled] {
+		cursor: no-drop; // stylelint-disable-line
+	}
+
+	span {
+		display: inline-block;
+		margin-left: 10px;
+		transform: translate(0);
+		transition-property: transform;
+		transition-duration: 250ms;
+		transition-timing-function: ease-in-out;
+	}
+}
+
+/*
+ * Heading 01
+*/
+@mixin text-style-heading-01 ($color: inherit) {
+	$font-size: 4rem;
+	$line-height: 4rem;
+	$letter-spacing: 0;
+	$font-weight: 500;
+
+	@include base-text-style-heading(
+		$font-size,
+		$letter-spacing,
+		$line-height,
+		$font-weight,
+		$color,
+	);
+
+	@include at-laptop {
+		font-size: 7rem;
+		line-height: 7rem;
+	}
+}
+
+/*
+ * Heading 02
+*/
+@mixin text-style-heading-02 ($color: inherit) {
+	$font-size: 3.5rem;
+	$line-height: 3.5rem;
+	$letter-spacing: 0;
+	$font-weight: 500;
+
+	@include base-text-style-heading(
+		$font-size,
+		$letter-spacing,
+		$line-height,
+		$font-weight,
+		$color,
+	);
+
+	@include at-laptop {
+		font-size: 5rem;
+		line-height: 5.5rem;
+	}
+}
+
+/*
+ * Heading 03
+*/
+@mixin text-style-heading-03 ($color: inherit) {
+	$font-size: 3rem;
+	$line-height: 3rem;
+	$letter-spacing: 0;
+	$font-weight: 500;
+
+	@include base-text-style-heading(
+		$font-size,
+		$letter-spacing,
+		$line-height,
+		$font-weight,
+		$color,
+	);
+
+	@include at-laptop {
+		font-size: 4.5rem;
+		line-height: 5rem;
+	}
+}
+
+/*
+ * Heading 04
+*/
+@mixin text-style-heading-04 ($color: inherit) {
+	$font-size: 2.3rem;
+	$line-height: 3.6rem;
+	$letter-spacing: 0;
+	$font-weight: 500;
+
+	@include base-text-style-heading(
+		$font-size,
+		$letter-spacing,
+		$line-height,
+		$font-weight,
+		$color,
+	);
+
+	@include at-laptop {
+		font-size: 3.4rem;
+		line-height: 4rem;
+	}
+}
+
+/*
+ * Heading 05
+*/
+@mixin text-style-heading-05 ($color: inherit) {
+	$font-size: 2.3rem;
+	$line-height: 3.6rem;
+	$letter-spacing: 0;
+	$font-weight: 500;
+
+	@include base-text-style-heading(
+		$font-size,
+		$letter-spacing,
+		$line-height,
+		$font-weight,
+		$color,
+	);
+
+	@include at-laptop {
+		font-size: 3.4rem;
+		line-height: 3.8rem;
+	}
+}
+
+/*
+ * Heading 06
+*/
+@mixin text-style-heading-06 ($color: inherit) {
+	$font-size: 2.1rem;
+	$line-height: 2.3rem;
+	$letter-spacing: 0;
+	$font-weight: 500;
+
+	@include base-text-style-heading(
+		$font-size,
+		$letter-spacing,
+		$line-height,
+		$font-weight,
+		$color,
+	);
+
+	@include at-laptop {
+		font-size: 2.8rem;
+		line-height: 3.1rem;
+	}
+}
+
+/*
+ * Dropdown Nav Heading
+*/
+@mixin text-style-heading-drop-nav ($color: inherit) {
+	$font-size: 1.5rem;
+	$line-height: 1.8rem;
+	$letter-spacing: 0;
+	$font-weight: 500;
+
+	@include base-text-style-heading(
+		$font-size,
+		$letter-spacing,
+		$line-height,
+		$font-weight,
+		$color,
+	);
+}
+
+/*
+ * Eyebrow
+*/
+@mixin text-style-eyebrow ($color: inherit) {
+	$font-family: $suisseIntl;
+	$font-size: 1.4rem;
+	$line-height: 1.57;
+	$letter-spacing: .01em;
+	$font-weight: 400;
+
+	@include base-text-style(
+		$font-family,
+		$font-size,
+		$letter-spacing,
+		$line-height,
+		$font-weight,
+		$color,
+	);
+
+	@include at-laptop {
+		font-size: 1.8rem;
+	}
+
+	&:after {
+		content: '';
+		display: inline-block;
+		width: 10px;
+		height: 1px;
+		background-color: currentColor;
+		vertical-align: middle;
+	}
+}
+
+/*
+* P tag alternates
+*/
+@mixin text-style-p2($color: inherit) {
+	$font-size: 1.5rem;
+	$letter-spacing: 0;
+	$line-height: 2.4rem;
+	$font-weight: normal;
+
+	@include base-text-style-body-copy (
+		$font-size,
+		$letter-spacing,
+		$line-height,
+		$font-weight,
+		$color
+	);
+}
+
+@mixin text-style-p3($color: inherit) {
+	$font-size: 1.4rem;
+	$letter-spacing: 0;
+	$line-height: 2.2rem;
+	$font-weight: normal;
+
+	@include base-text-style-body-copy (
+		$font-size,
+		$letter-spacing,
+		$line-height,
+		$font-weight,
+		$color
+	);
+}
+
+@mixin hidden-laptop-down {
+	@include laptop-down {
+		display: none;
+	}
+}
+
+@mixin hidden-desktop-down {
+	@include desktop-down {
+		display: none;
+	}
+}
+
+@mixin circle-bullet-item($bgColor, $color, $diameter: 40px) {
+	width: $diameter;
+	height: $diameter;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	text-align: center;
+	border-radius: 50%;
+	background: $bgColor;
+	color: $color;
+}
+
+/**
+ * Keyframe Animations
+ */
+@keyframes fadeIn {
+	0% {
+		opacity: 0;
+		max-height: 0px;
+	}
+
+	15% {
+		opacity: 0;
+	}
+
+	100% {
+		opacity: 1;
+		max-height: 100vh;
+	}
+}
+
+@keyframes translateUp {
+	0% {
+		opacity: 0;
+		transform: translate3d(0, 30px, 0);
+	}
+
+	100% {
+		opacity: 1;
+		transform: translate3d(0, 0, 0);
+	}
+}
+
+@mixin animation-fade-in($duration: 1500ms, $timingFunction: ease-in-out) {
+	animation: fadeIn $duration $timingFunction;
+}
+
+@mixin animation-translate-up($duration: 500ms, $timingFunction: ease-in-out) {
+	animation: translateUp $duration $timingFunction;
+}
+
+@mixin image-hover {
+	overflow: hidden;
+
+	@include on-hover {
+		img {
+			transform: scale3d(1.05,1.05,1);
+		}
+	}
+
+	img {
+		transition: transform .4s cubic-bezier(.28,0,.12,1);
+	}
+}

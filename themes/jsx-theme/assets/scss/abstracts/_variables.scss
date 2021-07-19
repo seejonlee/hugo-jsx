@@ -1,0 +1,84 @@
+// -----------------------------------------------------------------------------
+// This file contains all application-wide Sass variables.
+// -----------------------------------------------------------------------------
+
+/* ============================================================================
+ * Font Family
+*/
+
+$suisseIntl: 'SuisseIntl';
+
+// Regular font family
+
+$text-font-stack: $suisseIntl, 'Helvetica Neue', 'sans-serif' !default;
+
+/* ============================================================================
+ * Colors
+*/
+
+$black: #000000 !default;
+$white: #FFFFFF !default;
+
+// Blues
+
+$blue-black-dk: #001524 !default;
+$blue-black: #08152E !default;
+$blue: #3333CC !default;
+$light-blue: #00CCFF !default;
+
+// Orange
+$orange: #FF4D3B !default;
+
+// Tan
+$tan: #FFECCE !default;
+
+// Gray
+$gray: #F4F4F4 !default;
+$light-gray: #FAFAFA !default;
+
+// Copy text color
+
+$text-color: $blue-black-dk !default;
+
+/* ============================================================================
+ * Container max width
+*/
+
+$max-width: 1600px !default;
+
+/* ============================================================================
+ * Breakpoints
+*/
+
+$breakpoints: (
+	'mobile': 320px,
+	'tablet': 768px,
+	'laptop': 992px,
+	'desktop': 1200px,
+	'widescreen': 1400px,
+) !default;
+
+/* ============================================================================
+ * Media feature expressions
+*/
+
+$tablet-up: 'min-width: #{map-get($breakpoints, tablet)}';
+$laptop-up: 'min-width: #{map-get($breakpoints, laptop)}';
+$desktop-up: 'min-width: #{map-get($breakpoints, desktop)}';
+$widescreen-up: 'min-width: #{map-get($breakpoints, widescreen)}';
+
+$tablet-down: 'max-width: calc(#{map-get($breakpoints, tablet)} - 1px)';
+$laptop-down: 'max-width: calc(#{map-get($breakpoints, laptop)} - 1px)';
+$desktop-down: 'max-width: calc(#{map-get($breakpoints, desktop)} - 1px)';
+$widescreen-down: 'max-width: calc(#{map-get($breakpoints, widescreen)} - 1px)';
+
+/* ============================================================================
+ * Base URL
+*/
+
+// Relative or absolute URL where all assets are served from
+// @type String
+// @example scss - When using a CDN
+// $base-url: 'http://cdn.example.com/assets/';
+
+$base-url: '/' !default;

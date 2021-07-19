@@ -1,0 +1,9 @@
+<!-- Load and run scripts within the 'static' dir (location to store vendor scripts if needed) -->
+<!-- <script src="/js/index.js"></script>
+<script>
+	Init vendor scripts.
+</script> -->
+
+<!-- Built Scripts -->
+{{ $js := resources.Get "js/main.js" | js.Build }}
+<script src="{{ $js.RelPermalink }}"></script>

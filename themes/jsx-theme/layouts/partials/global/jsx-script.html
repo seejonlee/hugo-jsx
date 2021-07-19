@@ -1,0 +1,22 @@
+{{ $shims := dict }}
+{{ $defines := dict }}
+{{ $params := dict }}
+{{ $root := "home" }}
+
+{{ if not .Page.IsHome }}
+	{{ $root = .Page.RelPermalink | replaceRE "/" "" }}
+{{ end }}
+
+<h6>{{ .Page.Title }}</h6>
+<div>{{ $root }}</div>
+
+{{ if hugo.IsProduction }}
+	{{ $shims = dict "react" "js/shims/react.js"  "react-dom" "js/shims/react-dom.js" }}
+{{ else }}
+	{{ $defines = dict "process.env.NODE_ENV" `"development"` }}
+{{ end }}
+
+{{ $params = dict "rootId" $root "someArg" "some arg value" "pageSections" .Params.page_sections }}
+<div style="color: red;">{{ $params.rootId }}</div>
+{{ $js := resources.Get "js/jsx-components/PageLayout.jsx" | js.Build (dict "params" $params "shims" $shims "defines" $defines) }}
+<script src="{{ $js.RelPermalink }}" defer></script>

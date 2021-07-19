@@ -1,0 +1,45 @@
+/**
+ * Basic typography style for copy text
+ */
+
+html {
+	font-size: 10px;
+}
+
+body {
+	@include text-style-body-copy($text-color);
+}
+
+h1 {
+	@include text-style-heading-01;
+
+	&.large {
+		font-size: 5rem;
+		line-height: 5rem;
+
+		@include at-laptop {
+			font-size: 8rem;
+			line-height: 8rem;
+		}
+	}
+}
+
+h2 {
+	@include text-style-heading-02;
+}
+
+h3 {
+	@include text-style-heading-03;
+}
+
+h4 {
+	@include text-style-heading-04;
+}
+
+h5 {
+	@include text-style-heading-05;
+}
+
+h6 {
+	@include text-style-heading-06;
+}

@@ -1,0 +1,164 @@
+// -----------------------------------------------------------------------------
+// This file contains CSS helper classes.
+// -----------------------------------------------------------------------------
+
+/**
+ * Clear inner floats
+ */
+
+.clearfix::after {
+	clear: both;
+	content: '';
+	display: table;
+}
+
+/**
+ * Main content container with max width
+ */
+
+.container {
+	max-width: $max-width;
+	margin: 0 auto;
+	padding: 0 20px;
+	width: 100%;
+
+	@include at-tablet {
+		padding: 0 40px;
+	}
+
+	@include at-laptop {
+		padding: 0 80px;
+	}
+
+	&.small {
+		max-width: 1005px;
+	}
+}
+
+/**
+ * Hide text while making it readable for screen readers
+ * 1. Needed in WebKit-based browsers because of an implementation bug;
+ *	See: https://code.google.com/p/chromium/issues/detail?id=457146
+ */
+
+.hide-text {
+	overflow: hidden;
+	padding: 0; /* 1 */
+	text-indent: 101%;
+	white-space: nowrap;
+}
+
+/**
+ * Hide element while making it readable for screen readers
+ * Shamelessly borrowed from HTML5Boilerplate:
+ * https://github.com/h5bp/html5-boilerplate/blob/master/src/css/main.css#L119-L133
+ */
+
+.visually-hidden {
+	border: 0;
+	clip: rect(0 0 0 0);
+	height: 1px;
+	margin: -1px;
+	overflow: hidden;
+	padding: 0;
+	position: absolute;
+	width: 1px;
+}
+
+/**
+ * Typography
+ */
+
+.eyebrow {
+	@include text-style-eyebrow;
+}
+
+.h1 {
+	@include text-style-heading-01;
+
+	&.large {
+		font-size: 5rem;
+		line-height: 5rem;
+
+		@include at-laptop {
+			font-size: 8rem;
+			line-height: 8rem;
+		}
+	}
+}
+
+.h2 {
+	@include text-style-heading-02;
+}
+
+.h3 {
+	@include text-style-heading-03;
+}
+
+.h4 {
+	@include text-style-heading-04;
+}
+
+.h5 {
+	@include text-style-heading-05;
+}
+
+.h6 {
+	@include text-style-heading-06;
+}
+
+.p2 {
+	@include text-style-p2;
+}
+
+.p3 {
+	@include text-style-p3;
+}
+
+// Color classes
+
+.color--white {
+	color: $white;
+}
+
+.color--black {
+	color: $black;
+}
+
+// BG color classes
+
+.bg-color--white {
+	background: $white;
+}
+
+.bg-color--black {
+	background: $black;
+}
+
+// Font weight classes
+
+.font-light {
+	font-weight: 300;
+}
+
+.font-regular {
+	font-weight: 400;
+}
+
+.font-medium {
+	font-weight: 500;
+}
+
+.font-strong {
+	font-weight: 700;
+}
+
+.circle-bullet-item {
+	&--dark {
+		@include circle-bullet-item($bgColor: $blue-black, $color: $white);
+	}
+
+	&--light {
+		@include circle-bullet-item($bgColor: $white, $color: $blue-black);
+	}
+}

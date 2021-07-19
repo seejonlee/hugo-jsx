@@ -1,0 +1,11 @@
+<!DOCTYPE html>
+<html>
+    {{- partial "global/head.html" . -}}
+    <body>
+        <div id="content">
+        {{- block "main" . }}{{- end }}
+        </div>
+		{{- block "jsxScript" . }}{{- end }}
+		{{- partial "global/script.html" . -}}
+    </body>
+</html>

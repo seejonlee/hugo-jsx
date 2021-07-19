@@ -1,0 +1,19 @@
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+	{{ if hugo.IsProduction }}
+		{{/* We import from node_modules in development to get code completion etc. working. */}}
+		<script src="https://unpkg.com/react@17/umd/react.production.min.js" crossorigin></script>
+		<script src="https://unpkg.com/react-dom@17/umd/react-dom.production.min.js" crossorigin></script>
+    {{ end }}
+
+	<!-- Main Styles -->
+	{{ $options := (dict "targetPath" "css/main.css" "enableSourceMap" true ) }}
+	{{ $style := resources.Get "scss/main.scss" | resources.ToCSS $options | resources.PostCSS }}
+	<link rel="stylesheet" href="{{ $style.Permalink }}">
+
+	{{ $title := print .Site.Title " | " .Title }}
+	{{ if .IsHome }}{{ $title = .Site.Title }}{{ end }}
+	<title>{{ $title }}</title>
+</head>

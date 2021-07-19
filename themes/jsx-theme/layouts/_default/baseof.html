@@ -2,6 +2,14 @@
 <html>
     {{- partial "global/head.html" . -}}
     <body>
+		<nav
+			style="height: 50px; display: flex; justify-content: center; align-items: center;"
+		>
+			<a style="padding: 10px;" href="/">Home</a>
+			<a style="padding: 10px;" href="/company">Company</a>
+			<a style="padding: 10px;" href="/register">Register</a>
+			<a style="padding: 10px;" href="/resources">Resources</a>
+		</nav>
         <div id="content">
         {{- block "main" . }}{{- end }}
         </div>

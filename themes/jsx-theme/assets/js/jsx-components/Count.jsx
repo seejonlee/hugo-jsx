@@ -4,8 +4,19 @@ const Count = () => {
 	const [count, setCount] = React.useState(0);
 
 	return (
-		<div className={`count`}>
-			<span>{count}</span>
+		<div
+			className={`count`}
+			style={{
+				padding: `20px`,
+			}}
+		>
+			<span
+				style={{
+					marginRight: `10px`,
+				}}
+			>
+				{count}
+			</span>
 			<button
 				onClick={() => {
 					setCount(prev => {
@@ -13,7 +24,7 @@ const Count = () => {
 					});
 				}}
 			>
-				INCREMENT ME
+				CLICK TO INCREMENT ME
 			</button>
 		</div>
 	);

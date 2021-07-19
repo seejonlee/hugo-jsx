@@ -6,9 +6,11 @@ import * as params from '@params';
 import BaseLayout from './BaseLayout.jsx';
 import Count from './Count.jsx';
 
-console.log({params});
-
 const ROOT_ID = params.rootId;
+
+console.log({params});
+console.log(ROOT_ID);
+
 
 const PageLayout = () => {
 	return (
